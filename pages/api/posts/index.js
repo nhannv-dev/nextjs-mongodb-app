@@ -1,12 +1,12 @@
-import { ValidateProps } from '@/api-lib/constants';
-import { findPosts, insertPost } from '@/api-lib/db';
-import { auths, database, validateBody } from '@/api-lib/middlewares';
-import { ncOpts } from '@/api-lib/nc';
-import nc from 'next-connect';
+import { ValidateProps } from '@/api-lib/constants'
+import { findPosts, insertPost } from '@/api-lib/db'
+import { auths, database, validateBody } from '@/api-lib/middlewares'
+import { ncOpts } from '@/api-lib/nc'
+import nc from 'next-connect'
 
-const handler = nc(ncOpts);
+const handler = nc(ncOpts)
 
-handler.use(database);
+handler.use(database)
 
 handler.get(async (req, res) => {
   const posts = await findPosts(
@@ -14,10 +14,10 @@ handler.get(async (req, res) => {
     req.query.before ? new Date(req.query.before) : undefined,
     req.query.by,
     req.query.limit ? parseInt(req.query.limit, 10) : undefined
-  );
+  )
 
-  res.json({ posts });
-});
+  res.json({ posts })
+})
 
 handler.post(
   ...auths,
@@ -31,16 +31,16 @@ handler.post(
   }),
   async (req, res) => {
     if (!req.user) {
-      return res.status(401).end();
+      return res.status(401).end()
     }
 
     const post = await insertPost(req.db, {
       content: req.body.content,
       creatorId: req.user._id,
-    });
+    })
 
-    return res.json({ post });
+    return res.json({ post })
   }
-);
+)
 
-export default handler;
+export default handler

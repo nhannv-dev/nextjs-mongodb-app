@@ -1,5 +1,5 @@
-import { ObjectId } from 'mongodb';
-import { dbProjectionUsers } from './user';
+import { ObjectId } from 'mongodb'
+import { dbProjectionUsers } from './user'
 
 export async function findPostById(db, id) {
   const posts = await db
@@ -18,9 +18,9 @@ export async function findPostById(db, id) {
       { $unwind: '$creator' },
       { $project: dbProjectionUsers('creator.') },
     ])
-    .toArray();
-  if (!posts[0]) return null;
-  return posts[0];
+    .toArray()
+  if (!posts[0]) return null
+  return posts[0]
 }
 
 export async function findPosts(db, before, by, limit = 10) {
@@ -46,7 +46,7 @@ export async function findPosts(db, before, by, limit = 10) {
       { $unwind: '$creator' },
       { $project: dbProjectionUsers('creator.') },
     ])
-    .toArray();
+    .toArray()
 }
 
 export async function insertPost(db, { content, creatorId }) {
@@ -54,8 +54,8 @@ export async function insertPost(db, { content, creatorId }) {
     content,
     creatorId,
     createdAt: new Date(),
-  };
-  const { insertedId } = await db.collection('posts').insertOne(post);
-  post._id = insertedId;
-  return post;
+  }
+  const { insertedId } = await db.collection('posts').insertOne(post)
+  post._id = insertedId
+  return post
 }

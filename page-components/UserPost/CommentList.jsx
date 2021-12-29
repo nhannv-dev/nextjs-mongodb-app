@@ -1,18 +1,16 @@
-import { Button } from '@/components/Button';
-import { Comment } from '@/components/Comment';
-import { Container, Spacer } from '@/components/Layout';
-import { Text } from '@/components/Text';
-import { useCommentPages } from '@/lib/comment';
-import styles from './CommentList.module.css';
+import { Button } from '@/components/Button'
+import { Comment } from '@/components/Comment'
+import { Container, Spacer } from '@/components/Layout'
+import { Text } from '@/components/Text'
+import { useCommentPages } from '@/lib/comment'
+import styles from './CommentList.module.css'
 
 const CommentList = ({ post }) => {
-  const { data, size, setSize, isLoadingMore, isReachingEnd } = useCommentPages(
-    { postId: post._id }
-  );
+  const { data, size, setSize, isLoadingMore, isReachingEnd } = useCommentPages({
+    postId: post._id,
+  })
 
-  const comments = data
-    ? data.reduce((acc, val) => [...acc, ...val.comments], [])
-    : [];
+  const comments = data ? data.reduce((acc, val) => [...acc, ...val.comments], []) : []
 
   return (
     <div className={styles.root}>
@@ -37,7 +35,7 @@ const CommentList = ({ post }) => {
         )}
       </Container>
     </div>
-  );
-};
+  )
+}
 
-export default CommentList;
+export default CommentList

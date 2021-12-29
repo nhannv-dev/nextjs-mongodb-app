@@ -1,32 +1,32 @@
-import { Button } from '@/components/Button';
-import { Input } from '@/components/Input';
-import { Container, Spacer, Wrapper } from '@/components/Layout';
-import { TextLink } from '@/components/Text';
-import { fetcher } from '@/lib/fetch';
-import { useCurrentUser } from '@/lib/user';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useCallback, useRef, useState } from 'react';
-import toast from 'react-hot-toast';
-import styles from './Auth.module.css';
+import { Button } from '@/components/Button'
+import { Input } from '@/components/Input'
+import { Container, Spacer, Wrapper } from '@/components/Layout'
+import { TextLink } from '@/components/Text'
+import { fetcher } from '@/lib/fetch'
+import { useCurrentUser } from '@/lib/user'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useCallback, useRef, useState } from 'react'
+import toast from 'react-hot-toast'
+import styles from './Auth.module.css'
 
 const SignUp = () => {
-  const emailRef = useRef();
-  const passwordRef = useRef();
-  const usernameRef = useRef();
-  const nameRef = useRef();
+  const emailRef = useRef()
+  const passwordRef = useRef()
+  const usernameRef = useRef()
+  const nameRef = useRef()
 
-  const { mutate } = useCurrentUser();
+  const { mutate } = useCurrentUser()
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
 
-  const router = useRouter();
+  const router = useRouter()
 
   const onSubmit = useCallback(
     async (e) => {
-      e.preventDefault();
+      e.preventDefault()
       try {
-        setIsLoading(true);
+        setIsLoading(true)
         const response = await fetcher('/api/users', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -36,18 +36,18 @@ const SignUp = () => {
             password: passwordRef.current.value,
             username: usernameRef.current.value,
           }),
-        });
-        mutate({ user: response.user }, false);
-        toast.success('Your account has been created');
-        router.replace('/feed');
+        })
+        mutate({ user: response.user }, false)
+        toast.success('Your account has been created')
+        router.replace('/feed')
       } catch (e) {
-        toast.error(e.message);
+        toast.error(e.message)
       } finally {
-        setIsLoading(false);
+        setIsLoading(false)
       }
     },
     [mutate, router]
-  );
+  )
 
   return (
     <Wrapper className={styles.root}>
@@ -119,7 +119,7 @@ const SignUp = () => {
         </Link>
       </div>
     </Wrapper>
-  );
-};
+  )
+}
 
-export default SignUp;
+export default SignUp

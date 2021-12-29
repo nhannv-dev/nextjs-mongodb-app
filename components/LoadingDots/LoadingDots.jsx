@@ -1,5 +1,5 @@
-import clsx from 'clsx';
-import styles from './LoadingDots.module.css';
+import clsx from 'clsx'
+import styles from './LoadingDots.module.css'
 
 const LoadingDots = ({ children, className }) => {
   return (
@@ -9,7 +9,7 @@ const LoadingDots = ({ children, className }) => {
       <span />
       <span />
     </span>
-  );
-};
+  )
+}
 
-export default LoadingDots;
+export default LoadingDots

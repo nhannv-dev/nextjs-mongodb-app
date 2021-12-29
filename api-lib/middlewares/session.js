@@ -1,12 +1,12 @@
-import MongoStore from 'connect-mongo';
-import nextSession from 'next-session';
-import { promisifyStore } from 'next-session/lib/compat';
-import { getMongoClient } from './database';
+import MongoStore from 'connect-mongo'
+import nextSession from 'next-session'
+import { promisifyStore } from 'next-session/lib/compat'
+import { getMongoClient } from './database'
 
 const mongoStore = MongoStore.create({
   clientPromise: getMongoClient(),
   stringify: false,
-});
+})
 
 const getSession = nextSession({
   store: promisifyStore(mongoStore),
@@ -18,9 +18,9 @@ const getSession = nextSession({
     sameSite: 'strict',
   },
   touchAfter: 1 * 7 * 24 * 60 * 60, // 1 week
-});
+})
 
 export default async function session(req, res, next) {
-  await getSession(req, res);
-  next();
+  await getSession(req, res)
+  next()
 }

@@ -1,45 +1,45 @@
-import { Avatar } from '@/components/Avatar';
-import { Button } from '@/components/Button';
-import { Input } from '@/components/Input';
-import { Container } from '@/components/Layout';
-import { LoadingDots } from '@/components/LoadingDots';
-import { Text, TextLink } from '@/components/Text';
-import { useCommentPages } from '@/lib/comment';
-import { fetcher } from '@/lib/fetch';
-import { useCurrentUser } from '@/lib/user';
-import Link from 'next/link';
-import { useCallback, useRef, useState } from 'react';
-import toast from 'react-hot-toast';
-import styles from './Commenter.module.css';
+import { Avatar } from '@/components/Avatar'
+import { Button } from '@/components/Button'
+import { Input } from '@/components/Input'
+import { Container } from '@/components/Layout'
+import { LoadingDots } from '@/components/LoadingDots'
+import { Text, TextLink } from '@/components/Text'
+import { useCommentPages } from '@/lib/comment'
+import { fetcher } from '@/lib/fetch'
+import { useCurrentUser } from '@/lib/user'
+import Link from 'next/link'
+import { useCallback, useRef, useState } from 'react'
+import toast from 'react-hot-toast'
+import styles from './Commenter.module.css'
 
 const CommenterInner = ({ user, post }) => {
-  const contentRef = useRef();
-  const [isLoading, setIsLoading] = useState(false);
+  const contentRef = useRef()
+  const [isLoading, setIsLoading] = useState(false)
 
-  const { mutate } = useCommentPages({ postId: post._id });
+  const { mutate } = useCommentPages({ postId: post._id })
 
   const onSubmit = useCallback(
     async (e) => {
-      e.preventDefault();
+      e.preventDefault()
       try {
-        setIsLoading(true);
+        setIsLoading(true)
         await fetcher(`/api/posts/${post._id}/comments`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ content: contentRef.current.value }),
-        });
-        toast.success('You have added a comment');
-        contentRef.current.value = '';
+        })
+        toast.success('You have added a comment')
+        contentRef.current.value = ''
         // refresh post lists
-        mutate();
+        mutate()
       } catch (e) {
-        toast.error(e.message);
+        toast.error(e.message)
       } finally {
-        setIsLoading(false);
+        setIsLoading(false)
       }
     },
     [mutate, post._id]
-  );
+  )
 
   return (
     <form onSubmit={onSubmit}>
@@ -56,12 +56,12 @@ const CommenterInner = ({ user, post }) => {
         </Button>
       </Container>
     </form>
-  );
-};
+  )
+}
 
 const Commenter = ({ post }) => {
-  const { data, error } = useCurrentUser();
-  const loading = !data && !error;
+  const { data, error } = useCurrentUser()
+  const loading = !data && !error
 
   return (
     <div className={styles.root}>
@@ -87,7 +87,7 @@ const Commenter = ({ post }) => {
         </Text>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default Commenter;
+export default Commenter

@@ -86,11 +86,7 @@
   border-color: transparent;
   color: var(--themed-bg);
   --lighten-color: hsla(0, 0%, 100%, 0.8);
-  background-image: linear-gradient(
-    to right,
-    var(--lighten-color),
-    var(--lighten-color)
-  );
+  background-image: linear-gradient(to right, var(--lighten-color), var(--lighten-color));
 }
 
 [data-theme='dark'] .ghost {

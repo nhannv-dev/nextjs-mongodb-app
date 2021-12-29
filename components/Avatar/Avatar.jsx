@@ -1,4 +1,4 @@
-import styles from './Avatar.module.css';
+import styles from './Avatar.module.css'
 
 const Avatar = ({ size, username, url }) => {
   return (
@@ -9,7 +9,7 @@ const Avatar = ({ size, username, url }) => {
       width={size}
       height={size}
     />
-  );
-};
+  )
+}
 
-export default Avatar;
+export default Avatar

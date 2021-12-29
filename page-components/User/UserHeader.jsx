@@ -1,6 +1,6 @@
-import { Avatar } from '@/components/Avatar';
-import { Container } from '@/components/Layout';
-import styles from './UserHeader.module.css';
+import { Avatar } from '@/components/Avatar'
+import { Container } from '@/components/Layout'
+import styles from './UserHeader.module.css'
 
 const UserHeader = ({ user }) => {
   return (
@@ -14,7 +14,7 @@ const UserHeader = ({ user }) => {
       </h1>
       <p className={styles.bio}>{user.bio}</p>
     </Container>
-  );
-};
+  )
+}
 
-export default UserHeader;
+export default UserHeader

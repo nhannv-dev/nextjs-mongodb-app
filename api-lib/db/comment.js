@@ -1,5 +1,5 @@
-import { ObjectId } from 'mongodb';
-import { dbProjectionUsers } from '.';
+import { ObjectId } from 'mongodb'
+import { dbProjectionUsers } from '.'
 
 export async function findComments(db, postId, before, limit = 10) {
   return db
@@ -24,7 +24,7 @@ export async function findComments(db, postId, before, limit = 10) {
       { $unwind: '$creator' },
       { $project: dbProjectionUsers('creator.') },
     ])
-    .toArray();
+    .toArray()
 }
 
 export async function insertComment(db, postId, { content, creatorId }) {
@@ -33,8 +33,8 @@ export async function insertComment(db, postId, { content, creatorId }) {
     postId: new ObjectId(postId),
     creatorId,
     createdAt: new Date(),
-  };
-  const { insertedId } = await db.collection('comments').insertOne(comment);
-  comment._id = insertedId;
-  return comment;
+  }
+  const { insertedId } = await db.collection('comments').insertOne(comment)
+  comment._id = insertedId
+  return comment
 }

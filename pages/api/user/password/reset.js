@@ -1,19 +1,19 @@
-import { ValidateProps } from '@/api-lib/constants';
+import { ValidateProps } from '@/api-lib/constants'
 import {
   createToken,
   findAndDeleteTokenByIdAndType,
   findUserByEmail,
   UNSAFE_updateUserPassword,
-} from '@/api-lib/db';
-import { CONFIG as MAIL_CONFIG, sendMail } from '@/api-lib/mail';
-import { database, validateBody } from '@/api-lib/middlewares';
-import { ncOpts } from '@/api-lib/nc';
-import nc from 'next-connect';
-import normalizeEmail from 'validator/lib/normalizeEmail';
+} from '@/api-lib/db'
+import { CONFIG as MAIL_CONFIG, sendMail } from '@/api-lib/mail'
+import { database, validateBody } from '@/api-lib/middlewares'
+import { ncOpts } from '@/api-lib/nc'
+import nc from 'next-connect'
+import normalizeEmail from 'validator/lib/normalizeEmail'
 
-const handler = nc(ncOpts);
+const handler = nc(ncOpts)
 
-handler.use(database);
+handler.use(database)
 
 handler.post(
   validateBody({
@@ -25,20 +25,20 @@ handler.post(
     additionalProperties: false,
   }),
   async (req, res) => {
-    const email = normalizeEmail(req.body.email);
-    const user = await findUserByEmail(req.db, email);
+    const email = normalizeEmail(req.body.email)
+    const user = await findUserByEmail(req.db, email)
     if (!user) {
       res.status(400).json({
         error: { message: 'We couldn’t find that email. Please try again.' },
-      });
-      return;
+      })
+      return
     }
 
     const token = await createToken(req.db, {
       creatorId: user._id,
       type: 'passwordReset',
       expireAt: new Date(Date.now() + 1000 * 60 * 20),
-    });
+    })
 
     await sendMail({
       to: email,
@@ -50,11 +50,11 @@ handler.post(
         <p>Please follow <a href="${process.env.WEB_URI}/forget-password/${token._id}">this link</a> to reset your password.</p>
       </div>
       `,
-    });
+    })
 
-    res.status(204).end();
+    res.status(204).end()
   }
-);
+)
 
 handler.put(
   validateBody({
@@ -71,18 +71,14 @@ handler.put(
       req.db,
       req.body.token,
       'passwordReset'
-    );
+    )
     if (!deletedToken) {
-      res.status(403).end();
-      return;
+      res.status(403).end()
+      return
     }
-    await UNSAFE_updateUserPassword(
-      req.db,
-      deletedToken.creatorId,
-      req.body.password
-    );
-    res.status(204).end();
+    await UNSAFE_updateUserPassword(req.db, deletedToken.creatorId, req.body.password)
+    res.status(204).end()
   }
-);
+)
 
-export default handler;
+export default handler

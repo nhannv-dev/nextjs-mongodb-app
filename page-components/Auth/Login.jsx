@@ -1,33 +1,33 @@
-import { Button } from '@/components/Button';
-import { ButtonLink } from '@/components/Button/Button';
-import { Input } from '@/components/Input';
-import { Spacer, Wrapper } from '@/components/Layout';
-import { TextLink } from '@/components/Text';
-import { fetcher } from '@/lib/fetch';
-import { useCurrentUser } from '@/lib/user';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import toast from 'react-hot-toast';
-import styles from './Auth.module.css';
+import { Button } from '@/components/Button'
+import { ButtonLink } from '@/components/Button/Button'
+import { Input } from '@/components/Input'
+import { Spacer, Wrapper } from '@/components/Layout'
+import { TextLink } from '@/components/Text'
+import { fetcher } from '@/lib/fetch'
+import { useCurrentUser } from '@/lib/user'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import toast from 'react-hot-toast'
+import styles from './Auth.module.css'
 
 const Login = () => {
-  const emailRef = useRef();
-  const passwordRef = useRef();
+  const emailRef = useRef()
+  const passwordRef = useRef()
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
 
-  const { data: { user } = {}, mutate, isValidating } = useCurrentUser();
-  const router = useRouter();
+  const { data: { user } = {}, mutate, isValidating } = useCurrentUser()
+  const router = useRouter()
   useEffect(() => {
-    if (isValidating) return;
-    if (user) router.replace('/feed');
-  }, [user, router, isValidating]);
+    if (isValidating) return
+    if (user) router.replace('/feed')
+  }, [user, router, isValidating])
 
   const onSubmit = useCallback(
     async (event) => {
-      setIsLoading(true);
-      event.preventDefault();
+      setIsLoading(true)
+      event.preventDefault()
       try {
         const response = await fetcher('/api/auth', {
           method: 'POST',
@@ -36,17 +36,17 @@ const Login = () => {
             email: emailRef.current.value,
             password: passwordRef.current.value,
           }),
-        });
-        mutate({ user: response.user }, false);
-        toast.success('You have been logged in.');
+        })
+        mutate({ user: response.user }, false)
+        toast.success('You have been logged in.')
       } catch (e) {
-        toast.error('Incorrect email or password.');
+        toast.error('Incorrect email or password.')
       } finally {
-        setIsLoading(false);
+        setIsLoading(false)
       }
     },
     [mutate]
-  );
+  )
 
   return (
     <Wrapper className={styles.root}>
@@ -98,7 +98,7 @@ const Login = () => {
         </Link>
       </div>
     </Wrapper>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

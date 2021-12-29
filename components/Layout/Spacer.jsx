@@ -1,6 +1,6 @@
 const Spacer = ({ size, axis }) => {
-  const width = axis === 'vertical' ? 1 : size * 24;
-  const height = axis === 'horizontal' ? 1 : size * 24;
+  const width = axis === 'vertical' ? 1 : size * 24
+  const height = axis === 'horizontal' ? 1 : size * 24
   return (
     <span
       style={{
@@ -12,7 +12,7 @@ const Spacer = ({ size, axis }) => {
       }}
       aria-hidden="true"
     />
-  );
-};
+  )
+}
 
-export default Spacer;
+export default Spacer
